@@ -1,0 +1,35 @@
+{% extends "base.html" %} {% block blog_create_edit %} {% if not has_blog %}
+<div>
+    <a href="{% url "new-blog" %}">Create New Blog</a>
+</div>
+{% else %}
+<h2> {{blog_name}} </h2>
+<div>
+    <a href="{% url "update-blog" pk=blog.pk %}">Edit Blog Settings</a>
+</div>
+<div>
+    <a href="{% url "new-blogpost" %}">Create New Blog Post</a>
+</div>
+{% endif %} {% endblock %} {% block content %}
+
+<ul>
+    {% for post in blog_posts %}
+    <li>
+        <a href="{% url "blog-post-details" pk=post.pk %}">{{ post.title }}</a>
+        |
+        <a href="{% url "update-blog-post" pk=post.pk %}">Edit Post</a>
+        |
+        <a href="{% url "share-blog-post-with-blog" pk=post.pk %}">Share Post</a>
+    </li>
+    {% endfor %}
+</ul>
+{% if shared_posts %}
+<h2>Shared Blog Posts</h2>
+<ul>
+    {% for post in shared_posts %}
+    <li>
+        <a href="{% url "blog-post-details" pk=post.pk %}">{{ post.title }}</a>
+    </li>
+    {% endfor %}
+</ul>
+{% endif %} {% endblock %}
